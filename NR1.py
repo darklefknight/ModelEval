@@ -2,7 +2,8 @@ from netCDF4 import Dataset
 import numpy as np
 import pandas as pd
 if __name__ == "__main__":
-    NC_FILE = "/home/mpim/m300517/Downloads/modeleval_2016.nc"
+#    NC_FILE = "/home/mpim/m300517/Downloads/modeleval_2016.nc"
+    NC_FILE = "/data/share/lehre/unix/edvprak/Evaluat/modeleval_2016.nc"
 
     nc = Dataset(NC_FILE)
 
@@ -20,7 +21,7 @@ if __name__ == "__main__":
 
     variables = [temp,windSpeed,windDirect]
     variable_names = ["temp","Windspeed","Winddirection"]
-    deviations = [0.5,]
+    deviations = [0.5, ]
 
     # Hit Rates:
     print("HIT RATES")
@@ -30,6 +31,12 @@ if __name__ == "__main__":
         for i,height in enumerate(heights):
             AbsDev = abs(variable[i] - variable[i].median())
             AbsDev = AbsDev.median()
+            if name == "temp":
+                AbsDev = 0.5
+            elif name == "Windspeed":
+                AbsDev = 0.5
+            elif name == "Winddirection":
+                AbsDev = 23
             for t,time in enumerate(times):
                 left = abs(variable[i][t] - variable[5][t])
                 # print(AbsDev)
